@@ -127,6 +127,7 @@
                             dy = -dy;
                             b.status = 0;
                             score++;
+                            adjustBallAngle(); // 每次磚塊撞擊後調整反彈角度
                             if (score === brickRowCount * brickColumnCount) {
                                 gameOver = true;
                                 showRestartMessage();
@@ -135,6 +136,18 @@
                     }
                 }
             }
+        }
+
+        function adjustBallAngle() {
+            // 隨機生成 -5 到 5 度的角度變化
+            const angleAdjustment = (Math.random() * 10 - 5) * (Math.PI / 180); // -5到5度轉換為弧度
+            const speed = Math.sqrt(dx * dx + dy * dy); // 保持速度一致
+            const currentAngle = Math.atan2(dy, dx);    // 計算當前角度
+            const newAngle = currentAngle + angleAdjustment; // 添加角度變化
+
+            // 根據新的角度更新 dx 和 dy
+            dx = speed * Math.cos(newAngle);
+            dy = speed * Math.sin(newAngle);
         }
 
         function drawBall() {
@@ -202,17 +215,24 @@
 
             if (x + dx > canvas.width - ballRadius || x + dx < ballRadius) {
                 dx = -dx;
+                adjustBallAngle(); // 碰到牆壁後調整反彈角度
             }
+
             if (y + dy < ballRadius) {
                 dy = -dy;
+                adjustBallAngle(); // 碰到牆壁後調整反彈角度
             } else if (y + dy > canvas.height - ballRadius) {
                 if (x > paddleX && x < paddleX + paddleWidth) {
                     dy = -dy;
+                    adjustBallAngle(); // 碰到板子後調整反彈角度
                 } else {
                     gameOver = true;
                     showRestartMessage();
                 }
             }
+
+            x += dx;
+            y += dy;
 
             if (rightPressed && paddleX < canvas.width - paddleWidth) {
                 paddleX += 7;
@@ -220,12 +240,9 @@
                 paddleX -= 7;
             }
 
-            x += dx;
-            y += dy;
             requestAnimationFrame(draw);
         }
 
-        // 顯示開始訊息
         startMessage.style.display = 'block';
     </script>
 </body>
