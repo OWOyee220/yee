@@ -48,6 +48,7 @@
         let leftPressed = false;
         let gameStarted = false; // 用於跟蹤遊戲是否開始
         let gameOver = false;    // 用於檢測遊戲是否結束
+        let paused = false;      // 用於檢測遊戲是否暫停
 
         const brickRowCount = 5;
         const brickColumnCount = 3;
@@ -87,6 +88,11 @@
                 draw();
             } else if (e.key === "Enter" && gameOver) {
                 document.location.reload();
+            } else if (e.key === "p" || e.key === "P") {
+                paused = true;  // 暫停遊戲
+            } else if (e.key === "r" || e.key === "R") {
+                paused = false; // 繼續遊戲
+                draw();         // 繼續繪製遊戲
             }
         }
 
@@ -183,11 +189,8 @@
         }
 
         function draw() {
-            if (!gameStarted || gameOver) {
-                if (gameOver) {
-                    showRestartMessage();
-                }
-                return; // 確保遊戲只在開始後運行
+            if (!gameStarted || gameOver || paused) {
+                return; // 遊戲未開始、結束或暫停時不繪製
             }
 
             ctx.clearRect(0, 0, canvas.width, canvas.height);
