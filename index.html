@@ -37,8 +37,8 @@
         let ballRadius = 10;
         let x = canvas.width / 2;
         let y = canvas.height - 30;
-        let dx = 2;
-        let dy = -2;
+        let dx = 0;
+        let dy = 0;
 
         const paddleHeight = 10;
         const paddleWidth = 75;
@@ -50,7 +50,7 @@
         let gameOver = false;    // 用於檢測遊戲是否結束
 
         const brickRowCount = 5;
-        const brickColumnCount = 4;
+        const brickColumnCount = 3;
         const brickWidth = 75;
         const brickHeight = 20;
         const brickPadding = 10;
@@ -80,6 +80,10 @@
             } else if (e.key === " " && !gameStarted) {
                 gameStarted = true;
                 startMessage.style.display = 'none';
+                // 生成隨機的角度並計算dx和dy
+                const randomAngle = (Math.random() * 150 - 75) * (Math.PI / 180); // -75到75度轉換為弧度
+                dx = 2 * Math.sin(randomAngle); // x方向速度
+                dy = -2 * Math.cos(randomAngle); // y方向速度
                 draw();
             } else if (e.key === "Enter" && gameOver) {
                 document.location.reload();
@@ -97,8 +101,8 @@
         function resetGame() {
             x = canvas.width / 2;
             y = canvas.height - 30;
-            dx = 2;
-            dy = -2;
+            dx = 0;
+            dy = 0;
             paddleX = (canvas.width - paddleWidth) / 2;
             score = 0;
             for (let c = 0; c < brickColumnCount; c++) {
@@ -206,6 +210,7 @@
                     showRestartMessage();
                 }
             }
+
             if (rightPressed && paddleX < canvas.width - paddleWidth) {
                 paddleX += 7;
             } else if (leftPressed && paddleX > 0) {
