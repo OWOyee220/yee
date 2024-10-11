@@ -51,7 +51,7 @@
         let paused = false;      // 用於檢測遊戲是否暫停
 
         const brickRowCount = 5;
-        const brickColumnCount = 5;
+        const brickColumnCount = 3;
         const brickWidth = 75;
         const brickHeight = 20;
         const brickPadding = 10;
@@ -90,7 +90,7 @@
                 document.location.reload();
             } else if (e.key === "p" || e.key === "P") {
                 paused = true;  // 暫停遊戲
-            } else if (e.key === "r" || e.key === "R" && paused) { // 只在暫停時繼續遊戲
+            } else if (e.key === "r" || e.key === "R") {
                 paused = false; // 繼續遊戲
                 draw();         // 繼續繪製遊戲
             }
