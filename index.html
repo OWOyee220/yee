@@ -23,12 +23,13 @@
             transform: translate(-50%, -50%);
             font-size: 24px;
             color: #0095DD;
+            display: none;
         }
     </style>
 </head>
 <body>
     <canvas id="gameCanvas" width="480" height="320"></canvas>
-    <div id="startMessage">按空白鍵開始遊戲</div> <!-- 顯示提示訊息 -->
+    <div id="startMessage">按空白鍵開始遊戲</div>
     <script>
         const canvas = document.getElementById("gameCanvas");
         const ctx = canvas.getContext("2d");
@@ -67,7 +68,7 @@
 
         let score = 0;
 
-        const startMessage = document.getElementById('startMessage'); // 取得開始提示訊息的元素
+        const startMessage = document.getElementById('startMessage');
 
         document.addEventListener("keydown", keyDownHandler);
         document.addEventListener("keyup", keyUpHandler);
@@ -78,8 +79,8 @@
             } else if (e.key === "Left" || e.key === "ArrowLeft") {
                 leftPressed = true;
             } else if (e.key === " " && !gameStarted) {
-                gameStarted = true; // 遊戲開始
-                startMessage.style.display = 'none'; // 隱藏提示訊息
+                gameStarted = true;
+                startMessage.style.display = 'none';
                 // 生成隨機的角度並計算dx和dy
                 const randomAngle = (Math.random() * 150 - 75) * (Math.PI / 180); // -75到75度轉換為弧度
                 dx = 2 * Math.sin(randomAngle); // x方向速度
@@ -89,10 +90,9 @@
                 document.location.reload();
             } else if (e.key === "p" || e.key === "P") {
                 paused = true;  // 暫停遊戲
-            } else if (paused) { // 只在暫停時繼續遊戲
-                if (e.key === "h" || e.key === "H") {
-                    paused = false; // 繼續遊戲
-                    draw();         // 繼續繪製遊戲
+            } else if (e.key === "r" || e.key === "R" && paused) { // 只在暫停時繼續遊戲
+                paused = false; // 繼續遊戲
+                draw();         // 繼續繪製遊戲
             }
         }
 
@@ -243,7 +243,7 @@
             requestAnimationFrame(draw);
         }
 
-        startMessage.style.display = 'block'; // 初始時顯示提示訊息
+        startMessage.style.display = 'block';
     </script>
 </body>
 </html>
