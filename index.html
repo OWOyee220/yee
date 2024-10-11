@@ -88,12 +88,15 @@
                 draw();
             } else if (e.key === "Enter" && gameOver) {
                 document.location.reload();
+            } else if (e.key === "h" || e.key === "H") {
+                draw();
             } else if (e.key === "p" || e.key === "P") {
                 paused = true;  // 暫停遊戲
-            } else if (e.key === "r" || e.key === "R") {
-                paused = false; // 繼續遊戲
-                draw();         // 繼續繪製遊戲
-            }
+            } else if (paused === ture) {
+                if (e.key === "r" || e.key === "R"){
+                    paused = false; // 繼續遊戲
+                    draw();         // 繼續繪製遊戲
+                }
         }
 
         function keyUpHandler(e) {
