@@ -74,11 +74,11 @@
         document.addEventListener("keyup", keyUpHandler);
 
         function keyDownHandler(e) {
-            if (e.key === "Right" || e.key === "ArrowRight") {
+            if (e.code === "Right" || e.code === "ArrowRight") {
                 rightPressed = true;
-            } else if (e.key === "Left" || e.key === "ArrowLeft") {
+            } else if (e.code === "Left" || e.code === "ArrowLeft") {
                 leftPressed = true;
-            } else if (e.key === " " && !gameStarted) {
+            } else if (e.code === " " && !gameStarted) {
                 gameStarted = true;
                 startMessage.style.display = 'none';
                 // 生成隨機的角度並計算dx和dy
@@ -86,9 +86,9 @@
                 dx = 2 * Math.sin(randomAngle); // x方向速度
                 dy = -2 * Math.cos(randomAngle); // y方向速度
                 draw();
-            } else if (e.key === "Enter" && gameOver) {
+            } else if (e.code === "Enter" && gameOver) {
                 document.location.reload();
-            } else if (e.key === "p" || e.key === "P") {
+            } else if (e.code === "p" || e.code === "P") {
                 paused = !paused;  // 按下 p 鍵後切換暫停/繼續狀態
                 if (!paused) {
                     draw();  // 如果暫停狀態結束，繼續繪製遊戲
@@ -98,9 +98,9 @@
         }
 
         function keyUpHandler(e) {
-            if (e.key === "Right" || e.key === "ArrowRight") {
+            if (e.code === "Right" || e.code === "ArrowRight") {
                 rightPressed = false;
-            } else if (e.key === "Left" || e.key === "ArrowLeft") {
+            } else if (e.code === "Left" || e.code === "ArrowLeft") {
                 leftPressed = false;
             }
         }
