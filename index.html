@@ -51,7 +51,7 @@
         let paused = false;      // 用於檢測遊戲是否暫停
 
         const brickRowCount = 5;
-        const brickColumnCount = 3;
+        const brickColumnCount = 5;
         const brickWidth = 75;
         const brickHeight = 20;
         const brickPadding = 10;
@@ -150,10 +150,19 @@
             dy = speed * Math.sin(newAngle);
         }
 
+        function getRandomColor() {
+            const letters = '0123456789ABCDEF';
+            let color = '#';
+            for (let i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+
         function drawBall() {
             ctx.beginPath();
             ctx.arc(x, y, ballRadius, 0, Math.PI * 2);
-            ctx.fillStyle = "#0095DD";
+            ctx.fillStyle = getRandomColor();
             ctx.fill();
             ctx.closePath();
         }
@@ -161,7 +170,7 @@
         function drawPaddle() {
             ctx.beginPath();
             ctx.rect(paddleX, canvas.height - paddleHeight, paddleWidth, paddleHeight);
-            ctx.fillStyle = "#0095DD";
+            ctx.fillStyle = getRandomColor();
             ctx.fill();
             ctx.closePath();
         }
@@ -176,7 +185,7 @@
                         bricks[c][r].y = brickY;
                         ctx.beginPath();
                         ctx.rect(brickX, brickY, brickWidth, brickHeight);
-                        ctx.fillStyle = "#0095DD";
+                        ctx.fillStyle = getRandomColor();
                         ctx.fill();
                         ctx.closePath();
                     }
