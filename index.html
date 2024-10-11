@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>打磚塊遊戲</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+            margin: 0;
+        }
+        canvas {
+            border: 1px solid #000;
+        }
+        #startMessage {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 24px;
+            color: #0095DD;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="gameCanvas" width="480" height="320"></canvas>
+    <div id="startMessage">按空白鍵開始遊戲</div>
+    <script>
+        const canvas = document.getElementById("gameCanvas");
+        const ctx = canvas.getContext("2d");
+
+        let ballRadius = 10;
+        let x = canvas.width / 2;
+        let y = canvas.height - 30;
+        let dx = 0;
+        let dy = 0;
+
+        const paddleHeight = 10;
+        const paddleWidth = 75;
+        let paddleX = (canvas.width - paddleWidth) / 2;
+
+        let rightPressed = false;
+        let leftPressed = false;
+        let gameStarted = false; // 用於跟蹤遊戲是否開始
+        let gameOver = false;    // 用於檢測遊戲是否結束
+        let paused = false;      // 用於檢測遊戲是否暫停
+
+        const brickRowCount = 5;
+        const brickColumnCount = 3;
+        const brickWidth = 75;
+        const brickHeight = 20;
+        const brickPadding = 10;
+        const brickOffsetTop = 30;
+        const brickOffsetLeft = 30;
+
+        const bricks = [];
+        for (let c = 0; c < brickColumnCount; c++) {
+            bricks[c] = [];
+            for (let r = 0; r < brickRowCount; r++) {
+                bricks[c][r] = { x: 0, y: 0, status: 1 };
+            }
+        }
+
+        let score = 0;
+
+        const startMessage = document.getElementById('startMessage');
+
+        document.addEventListener("keydown", keyDownHandler);
+        document.addEventListener("keyup", keyUpHandler);
+
+        function keyDownHandler(e) {
+            if (e.key === "Right" || e.key === "ArrowRight") {
+                rightPressed = true;
+            } else if (e.key === "Left" || e.key === "ArrowLeft") {
+                leftPressed = true;
+            } else if (e.key === " " && !gameStarted) {
+                gameStarted = true;
+                startMessage.style.display = 'none';
+                // 生成隨機的角度並計算dx和dy
+                const randomAngle = (Math.random() * 150 - 75) * (Math.PI / 180); // -75到75度轉換為弧度
+                dx = 2 * Math.sin(randomAngle); // x方向速度
+                dy = -2 * Math.cos(randomAngle); // y方向速度
+                draw();
+            } else if (e.key === "Enter" && gameOver) {
+                document.location.reload();
+            } else if (e.key === "p" || e.key === "P") {
+                paused = true;  // 暫停遊戲
+            } else if (e.key === "r" || e.key === "R") {
+                paused = false; // 繼續遊戲
+                draw();         // 繼續繪製遊戲
+            }
+        }
+
+        function keyUpHandler(e) {
+            if (e.key === "Right" || e.key === "ArrowRight") {
+                rightPressed = false;
+            } else if (e.key === "Left" || e.key === "ArrowLeft") {
+                leftPressed = false;
+            }
+        }
+
+        function resetGame() {
+            x = canvas.width / 2;
+            y = canvas.height - 30;
+            dx = 0;
+            dy = 0;
+            paddleX = (canvas.width - paddleWidth) / 2;
+            score = 0;
+            for (let c = 0; c < brickColumnCount; c++) {
+                for (let r = 0; r < brickRowCount; r++) {
+                    bricks[c][r].status = 1;
+                }
+            }
+        }
+
+        function collisionDetection() {
+            for (let c = 0; c < brickColumnCount; c++) {
+                for (let r = 0; r < brickRowCount; r++) {
+                    const b = bricks[c][r];
+                    if (b.status === 1) {
+                        if (x > b.x && x < b.x + brickWidth && y > b.y && y < b.y + brickHeight) {
+                            dy = -dy;
+                            b.status = 0;
+                            score++;
+                            adjustBallAngle(); // 每次磚塊撞擊後調整反彈角度
+                            if (score === brickRowCount * brickColumnCount) {
+                                gameOver = true;
+                                showRestartMessage();
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        function adjustBallAngle() {
+            // 隨機生成 -5 到 5 度的角度變化
+            const angleAdjustment = (Math.random() * 10 - 5) * (Math.PI / 180); // -5到5度轉換為弧度
+            const speed = Math.sqrt(dx * dx + dy * dy); // 保持速度一致
+            const currentAngle = Math.atan2(dy, dx);    // 計算當前角度
+            const newAngle = currentAngle + angleAdjustment; // 添加角度變化
+
+            // 根據新的角度更新 dx 和 dy
+            dx = speed * Math.cos(newAngle);
+            dy = speed * Math.sin(newAngle);
+        }
+
+        function drawBall() {
+            ctx.beginPath();
+            ctx.arc(x, y, ballRadius, 0, Math.PI * 2);
+            ctx.fillStyle = "#0095DD";
+            ctx.fill();
+            ctx.closePath();
+        }
+
+        function drawPaddle() {
+            ctx.beginPath();
+            ctx.rect(paddleX, canvas.height - paddleHeight, paddleWidth, paddleHeight);
+            ctx.fillStyle = "#0095DD";
+            ctx.fill();
+            ctx.closePath();
+        }
+
+        function drawBricks() {
+            for (let c = 0; c < brickColumnCount; c++) {
+                for (let r = 0; r < brickRowCount; r++) {
+                    if (bricks[c][r].status === 1) {
+                        const brickX = c * (brickWidth + brickPadding) + brickOffsetLeft;
+                        const brickY = r * (brickHeight + brickPadding) + brickOffsetTop;
+                        bricks[c][r].x = brickX;
+                        bricks[c][r].y = brickY;
+                        ctx.beginPath();
+                        ctx.rect(brickX, brickY, brickWidth, brickHeight);
+                        ctx.fillStyle = "#0095DD";
+                        ctx.fill();
+                        ctx.closePath();
+                    }
+                }
+            }
+        }
+
+        function drawScore() {
+            ctx.font = "16px Arial";
+            ctx.fillStyle = "#0095DD";
+            ctx.fillText("得分: " + score, 8, 20);
+        }
+
+        function showRestartMessage() {
+            // 清空畫布
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            // 重新顯示得分
+            drawScore();
+            // 顯示重新開始的訊息
+            ctx.font = "24px Arial";
+            ctx.fillStyle = "#0095DD";
+            ctx.fillText("按下 Enter 鍵重新開始", canvas.width / 2 - 120, canvas.height / 2);
+        }
+
+        function draw() {
+            if (!gameStarted || gameOver || paused) {
+                return; // 遊戲未開始、結束或暫停時不繪製
+            }
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            drawBricks();
+            drawBall();
+            drawPaddle();
+            drawScore();
+            collisionDetection();
+
+            if (x + dx > canvas.width - ballRadius || x + dx < ballRadius) {
+                dx = -dx;
+                adjustBallAngle(); // 碰到牆壁後調整反彈角度
+            }
+
+            if (y + dy < ballRadius) {
+                dy = -dy;
+                adjustBallAngle(); // 碰到牆壁後調整反彈角度
+            } else if (y + dy > canvas.height - ballRadius) {
+                if (x > paddleX && x < paddleX + paddleWidth) {
+                    dy = -dy;
+                    adjustBallAngle(); // 碰到板子後調整反彈角度
+                } else {
+                    gameOver = true;
+                    showRestartMessage();
+                }
+            }
+
+            x += dx;
+            y += dy;
+
+            if (rightPressed && paddleX < canvas.width - paddleWidth) {
+                paddleX += 7;
+            } else if (leftPressed && paddleX > 0) {
+                paddleX -= 7;
+            }
+
+            requestAnimationFrame(draw);
+        }
+
+        startMessage.style.display = 'block';
+    </script>
+</body>
+</html>
