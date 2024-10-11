@@ -89,9 +89,10 @@
                 document.location.reload();
             } else if (e.key === "p" || e.key === "P") {
                 paused = true;  // 暫停遊戲
-            } else if (e.key === "r" || e.key === "R" && paused) { // 只在暫停時繼續遊戲
-                paused = false; // 繼續遊戲
-                draw();         // 繼續繪製遊戲
+            } else if (paused) { // 只在暫停時繼續遊戲
+                if (e.key === "h" || e.key === "H") {
+                    paused = false; // 繼續遊戲
+                    draw();         // 繼續繪製遊戲
             }
         }
 
