@@ -76,36 +76,37 @@
         document.addEventListener("keydown", keyDownHandler);
         document.addEventListener("keyup", keyUpHandler);
 
-        function keyDownHandler(e) {
-            if (e.key === "Right" || e.key === "ArrowRight") {
-                rightPressed = true;
-            } else if (e.key === "Left" || e.key === "ArrowLeft") {
-                leftPressed = true;
-            } else if (e.key === " " && (!gameStarted || gameOver)) { // 修改為只按空白鍵開始或重啟
-                if (gameOver) {
-                    resetGame(); // 重置遊戲
-                }
-                gameStarted = true;
-                
-                ballColor = getRandomColor(); // 生成隨機顏色
-                paddleColor = getRandomColor();
-                brickColor = getRandomColor();
-                scoreColor = getRandomColor();
-                
-                startMessage.style.display = 'none';
-                // 生成隨機的角度並計算dx和dy
-                const randomAngle = (Math.random() * 150 - 75) * (Math.PI / 180); // -75到75度轉換為弧度
-                dx = 3 * Math.sin(randomAngle); // x方向速度
-                dy = -3 * Math.cos(randomAngle); // y方向速度
-                
-                draw(); // 初次繪製遊戲
-            } else if (e.key === "p" || e.key === "P") {
-                paused = true;  // 暫停遊戲
-            } else if (e.key === "r" || e.key === "R" && paused) { // 只在暫停時繼續遊戲
-                paused = false; // 繼續遊戲
-                draw();         // 繼續繪製遊戲
-            }
+		        function keyDownHandler(e) {
+		    if (e.key === "Right" || e.key === "ArrowRight") {
+		        rightPressed = true;
+		    } else if (e.key === "Left" || e.key === "ArrowLeft") {
+		        leftPressed = true;
+		    } else if (e.key === " " && (!gameStarted || gameOver)) { // 修改為只按空白鍵開始或重啟
+		        if (gameOver) {
+		            resetGame(); // 重置遊戲
+		        }
+		        gameStarted = true;
+		        
+		        ballColor = getRandomColor(); // 生成隨機顏色
+		        paddleColor = getRandomColor();
+		        brickColor = getRandomColor();
+    		    scoreColor = getRandomColor();
+        
+        		startMessage.style.display = 'none';
+        		// 生成隨機的角度並計算dx和dy
+        		const randomAngle = (Math.random() * 150 - 75) * (Math.PI / 180); // -75到75度轉換為弧度
+        		dx = 3 * Math.sin(randomAngle); // x方向速度
+        		dy = -3 * Math.cos(randomAngle); // y方向速度
+        
+        		draw(); // 初次繪製遊戲
+    	} else if (e.key === "p" || e.key === "P") {
+        	paused = !paused; // 切換暫停/繼續狀態
+        	if (!paused) {
+            	draw(); // 如果繼續遊戲，則重新開始繪製
         }
+    }
+}
+
 
         function keyUpHandler(e) {
             if (e.key === "Right" || e.key === "ArrowRight") {
@@ -135,8 +136,8 @@
                 for (let r = 0; r < brickRowCount; r++) {
                     const b = bricks[c][r];
                     if (b.status === 1) {
-                        if (x > b.x && x < b.x + brickWidth && y > b.y && y < b.y + brickHeight) {
-                            dy = -dy;
+                        if (x + ballRadius > b.x && x - ballRadius < b.x + brickWidth && y + ballRadius > b.y && y - ballRadius < b.y + brickHeight) {
+    						dy = -dy;
                             b.status = 0;
                             score++;
                             adjustBallAngle(); // 每次磚塊撞擊後調整反彈角度
@@ -204,19 +205,31 @@
         function drawScore() {
             ctx.font = "16px Arial"; // 使用固定的字體大小
             ctx.fillStyle = "#0095DD"; // 使用得分顏色
-            ctx.fillText("得分: " + score, 8, 20);
+            ctx.fillText("得分: " + score, 10, 20);
         }
 
         function showRestartMessage() {
-            // 清空畫布
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            // 重新顯示得分
-            drawScore();
-            // 顯示重新開始的訊息
-            ctx.font = "24px Arial";
-            ctx.fillStyle = "#0095DD";
-            ctx.fillText("按空白鍵重新開始", canvas.width / 2 - 120, canvas.height / 2);
-        }
+	    	// 清空畫布
+	    	ctx.clearRect(0, 0, canvas.width, canvas.height);
+    		// 設定文字對齊方式為居中
+    		ctx.textAlign = "center";
+    
+    		// 顯示"恭喜過關！"的訊息
+			if (score === brickRowCount * brickColumnCount) {
+    			ctx.font = "24px Arial";
+    			ctx.fillStyle = "#0095DD";
+    			ctx.fillText("恭喜過關！", canvas.width / 2, canvas.height / 2 - 20);
+                // 顯示"按 空白鍵 重新開始"的訊息
+    			ctx.font = "20px Arial";
+    			ctx.fillStyle = "#0095DD";
+    			ctx.fillText("按 空白鍵 重新開始", canvas.width / 2, canvas.height / 2 + 20);
+            }else {
+            	ctx.font = "20px Arial";
+    			ctx.fillStyle = "#0095DD";
+    			ctx.fillText("按 空白鍵 再次挑戰", canvas.width / 2, canvas.height / 2);
+            }
+		}
+
 
         function draw() {
             if (!gameStarted || gameOver || paused) {
@@ -239,7 +252,7 @@
                 dy = -dy;
                 adjustBallAngle(); // 碰到牆壁後調整反彈角度
             } else if (y + dy > canvas.height - ballRadius) {
-                if (x > paddleX && x < paddleX + paddleWidth) {
+                if (y + ballRadius > canvas.height - paddleHeight && x > paddleX && x < paddleX + paddleWidth) {
                     dy = -dy;
                     adjustBallAngle(); // 碰到板子後調整反彈角度
                 } else {
