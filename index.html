@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>打磚塊遊戲版本</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        #gameFrame {
+            width: 100%;
+            height: 500px;
+            border: 1px solid #ccc;
+            margin-top: 20px;
+        }
+        .link {
+            display: block;
+            margin: 5px 0;
+            text-decoration: none;
+            color: blue;
+        }
+    </style>
+</head>
+<body>
+    <h1>打磚塊遊戲版本</h1>
+    <h2>點擊下方連結來展示不同版本的遊戲</h2>
+    <a href="#" class="link" onclick="loadGame('0.0.html')">Ver. 0.0</a>
+    <a href="#" class="link" onclick="loadGame('1.0.html')">Ver. 1.0</a>
+    <a href="#" class="link" onclick="loadGame('1.1.html')">Ver. 1.1</a>
+    <a href="#" class="link" onclick="loadGame('1.2.html')">Ver. 1.2</a>
+    <a href="#" class="link" onclick="loadGame('1.3.html')">Ver. 1.3</a>
+    <a href="#" class="link" onclick="loadGame('1.4.html')">Ver. 1.4</a>
+    <a href="#" class="link" onclick="loadGame('1.5.html')">Ver. 1.5</a>
+    <a href="#" class="link" onclick="loadGame('1.6.html')">Ver. 1.6</a>
+
+    <iframe id="gameFrame" src="" frameborder="0"></iframe>
+
+    <script>
+        function loadGame(version) {
+            const frame = document.getElementById('gameFrame');
+            frame.src = version; // 根據選擇的版本更新 iframe 的 src
+        }
+    </script>
+</body>
+</html>
