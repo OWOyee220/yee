@@ -10,7 +10,7 @@
             margin: 20px;
         }
         #gameFrame {
-            width: 100%; 
+            width: 100%; /* 相對於視窗的寬度 */
             height: 60vh; /* 相對於視窗的高度 */
             border: 1px solid #ccc;
             margin-top: 20px;
@@ -69,6 +69,23 @@
     <!-- 遊戲說明 -->
     <div id="description">請選擇一個遊戲版本以查看說明。</div>
 
+    <!-- 操作說明表格 -->
+    <h2>操作說明</h2>
+    <table id="controlsTable">
+        <thead>
+            <tr>
+                <th>動作</th>
+                <th>按鍵</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>請選擇一個遊戲版本以查看操作說明。</td>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>
+
     <!-- 用於顯示遊戲的 iframe -->
     <iframe id="gameFrame" src="" frameborder="0"></iframe>
 
@@ -88,18 +105,63 @@
         };
 
         // 用來載入遊戲和顯示對應的說明
+        const gameControls = {
+            version1: [
+                { action: "移動板子", key: "← / →" },
+                { action: "發射球", key: "空白鍵" }
+            ],
+            version2: [
+                { action: "移動板子", key: "← / →" },
+                { action: "發射球", key: "空白鍵" },
+                { action: "暫停遊戲", key: "P" }
+            ],
+            version3: [
+                { action: "移動板子", key: "← / →" },
+                { action: "發射球", key: "空白鍵" },
+                { action: "道具使用", key: "E" }
+            ]
+            // 其他版本的操作說明...
+        };
+
+        // 用來載入遊戲和顯示對應的說明
         function loadGame(versionFile, version) {
-            const frame = document.getElementById('gameFrame');
-            const description = document.getElementById('description');
-            const readRecords = document.getElementById('readRecords');
+    		const frame = document.getElementById('gameFrame');
+    		const description = document.getElementById('description');
+    		const readRecords = document.getElementById('readRecords');
+    		const controlsTable = document.getElementById('controlsTable').getElementsByTagName('tbody')[0];
 
-            // 更新 iframe 的 src 以載入選擇的遊戲版本
-            frame.src = versionFile;
+    		// 更新 iframe 的 src 以載入選擇的遊戲版本
+    		frame.src = versionFile;
 
-            // 根據選擇的版本更新說明內容
-            description.textContent = gameDescriptions[version] || "此版本沒有提供說明。";
+    		// 根據選擇的版本更新說明內容
+    		description.textContent = gameDescriptions[version] || "此版本沒有提供說明。";
 
-        }
+		    // 清除舊的操作說明表格內容
+    		controlsTable.innerHTML = '';
+
+    		// 根據選擇的版本更新操作說明
+    		if (gameControls[version]) {
+        		gameControls[version].forEach(control => {
+            		const row = document.createElement('tr');
+            		const actionCell = document.createElement('td');
+            		const keyCell = document.createElement('td');
+            		actionCell.textContent = control.action;
+            		keyCell.textContent = control.key;
+            		row.appendChild(actionCell);
+            		row.appendChild(keyCell);
+            		controlsTable.appendChild(row);
+        		});
+    		} else {
+        		const row = document.createElement('tr');
+        		const actionCell = document.createElement('td');
+        		const keyCell = document.createElement('td');
+        		actionCell.textContent = "此版本沒有提供操作說明。";
+        		row.appendChild(actionCell);
+        		row.appendChild(keyCell);
+        		controlsTable.appendChild(row);
+    		}
+		}
+
     </script>
 </body>
 </html>
