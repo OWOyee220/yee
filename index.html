@@ -21,34 +21,43 @@
             text-decoration: none;
             color: blue;
         }
+        #description {
+            margin-top: 20px;
+            font-size: 16px;
+        }
     </style>
 </head>
 <body>
     <h1>打磚塊遊戲版本</h1>
     <h2>點擊下方連結來展示不同版本的遊戲</h2>
-    <a href="#" class="link" onclick="loadGame('0.0.html')">Ver. 0.0</a>
-    <a href="#" class="link" onclick="loadGame('0.1.html')">Ver. 0.1</a>
-    <a href="#" class="link" onclick="loadGame('1.0.html')">Ver. 1.0</a>
-    <a href="#" class="link" onclick="loadGame('1.1.html')">Ver. 1.1</a>
-    <a href="#" class="link" onclick="loadGame('1.2.html')">Ver. 1.2</a>
-    <a href="#" class="link" onclick="loadGame('1.3.html')">Ver. 1.3</a>
-    <a href="#" class="link" onclick="loadGame('1.4.html')">Ver. 1.4</a>
-    <a href="#" class="link" onclick="loadGame('1.5.html')">Ver. 1.5</a>
-    <a href="#" class="link" onclick="loadGame('1.6.html')">Ver. 1.6</a>
+    <a href="#" class="link" onclick="loadGame('0.0.html', 'ver0')">Ver. 0.0</a>
+    <a href="#" class="link" onclick="loadGame('0.1.html', 'ver1')">Ver. 0.1</a>
+    <a href="#" class="link" onclick="loadGame('1.0.html', 'ver2')">Ver. 1.0</a>
+    <a href="#" class="link" onclick="loadGame('1.1.html', 'ver3')">Ver. 1.1</a>
+    <a href="#" class="link" onclick="loadGame('1.2.html', 'ver4')">Ver. 1.2</a>
+    <a href="#" class="link" onclick="loadGame('1.3.html', 'ver5')">Ver. 1.3</a>
+    <a href="#" class="link" onclick="loadGame('1.4.html', 'ver6')">Ver. 1.4</a>
+    <a href="#" class="link" onclick="loadGame('1.5.html', 'ver7')">Ver. 1.5</a>
+    <a href="#" class="link" onclick="loadGame('1.6.html', 'ver8')">Ver. 1.6</a>
 
+    <!-- 用來展示遊戲的 iframe -->
     <iframe id="gameFrame" src="" frameborder="0"></iframe>
 
-    <script>
-        function loadGame(version) {
-            const frame = document.getElementById('gameFrame');
-            frame.src = version; // 根據選擇的版本更新 iframe 的 src
-        }
+    <!-- 用來顯示版本說明的區域 -->
+    <div id="description">請選擇一個遊戲版本來查看其說明。</div>
 
+    <script>
         // 定義每個版本的遊戲說明
         const gameDescriptions = {
-            version1: "Ver. 0.0：這是一個基本的打磚塊遊戲，擁有簡單的磚塊排列和控制。",
-            version2: "Ver. 0.1：增加了道具系統，玩家可以收集道具來增強遊戲體驗。",
-            version3: "Ver. 1.0：加入了多彩磚塊和不同的遊戲模式，挑戰性更高。",
+            ver0: "Ver. 0.0：這是一個基本的打磚塊遊戲，擁有簡單的磚塊排列和控制。",
+            ver1: "Ver. 0.1：增加了道具系統，玩家可以收集道具來增強遊戲體驗。",
+            ver2: "Ver. 1.0：加入了多彩磚塊和不同的遊戲模式，挑戰性更高。",
+            ver3: "Ver. 1.1：修正了碰撞判斷並增加了更多的關卡。",
+            ver4: "Ver. 1.2：引入了強化道具，提升了遊戲的可玩性。",
+            ver5: "Ver. 1.3：改善了遊戲速度的控制，提供更流暢的體驗。",
+            ver6: "Ver. 1.4：新增了音效和背景音樂，提升了遊戲的沉浸感。",
+            ver7: "Ver. 1.5：加入了多人遊戲模式，讓玩家可以與朋友競爭。",
+            ver8: "Ver. 1.6：引入了全新的障礙物設計，挑戰性進一步提升。",
             // 可以為更多版本添加描述
         };
 
