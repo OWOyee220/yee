@@ -27,6 +27,7 @@
     <h1>打磚塊遊戲版本</h1>
     <h2>點擊下方連結來展示不同版本的遊戲</h2>
     <a href="#" class="link" onclick="loadGame('0.0.html')">Ver. 0.0</a>
+    <a href="#" class="link" onclick="loadGame('0.1.html')">Ver. 0.1</a>
     <a href="#" class="link" onclick="loadGame('1.0.html')">Ver. 1.0</a>
     <a href="#" class="link" onclick="loadGame('1.1.html')">Ver. 1.1</a>
     <a href="#" class="link" onclick="loadGame('1.2.html')">Ver. 1.2</a>
@@ -41,6 +42,26 @@
         function loadGame(version) {
             const frame = document.getElementById('gameFrame');
             frame.src = version; // 根據選擇的版本更新 iframe 的 src
+        }
+
+        // 定義每個版本的遊戲說明
+        const gameDescriptions = {
+            version1: "Ver. 0.0：這是一個基本的打磚塊遊戲，擁有簡單的磚塊排列和控制。",
+            version2: "Ver. 0.1：增加了道具系統，玩家可以收集道具來增強遊戲體驗。",
+            version3: "Ver. 1.0：加入了多彩磚塊和不同的遊戲模式，挑戰性更高。",
+            // 可以為更多版本添加描述
+        };
+
+        // 用來載入遊戲和顯示對應的說明
+        function loadGame(versionFile, version) {
+            const frame = document.getElementById('gameFrame');
+            const description = document.getElementById('description');
+            
+            // 更新 iframe 的 src 以載入選擇的遊戲版本
+            frame.src = versionFile;
+            
+            // 根據選擇的版本更新說明內容
+            description.textContent = gameDescriptions[version] || "此版本沒有提供說明。";
         }
     </script>
 </body>
