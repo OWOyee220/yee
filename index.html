@@ -8,160 +8,212 @@
         body {
             font-family: Arial, sans-serif;
             margin: 20px;
+            overflow: hidden; /* 禁止垂直和水平滾動條 */
         }
+
         #gameFrame {
-            width: 100%; /* 相對於視窗的寬度 */
-            height: 60vh; /* 相對於視窗的高度 */
+            width: 100%; /* 設置為視窗寬度的 100% */
+            height: 60vh; /* 設置為視窗高度的 60% */
             border: 1px solid #ccc;
             margin-top: 20px;
         }
-        table {
-            width: 100%;
-            margin-top: 20px;
-            border-collapse: collapse;
-        }
-        td {
-            padding: 10px;
-            text-align: center;
-            border: 1px solid #ccc;
-        }
+
         .link {
             text-decoration: none;
             color: blue;
         }
-        #description {
-            margin-top: 10px;
-            font-size: 18px;
-            font-weight: bold;
-        }
-        #readRecords {
+
+        #description, #controls {
             margin-top: 20px;
             font-size: 16px;
-            text-align: center;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        th, td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: left;
+        }
+        
+        th {
+            background-color: #f2f2f2;
         }
     </style>
 </head>
 <body>
     <h1>打磚塊遊戲版本</h1>
     <h2>點擊下方連結來展示不同版本的遊戲</h2>
-
-    <!-- 表格中顯示遊戲版本 -->
+    
+    <!-- 版本連結表格 -->
     <table>
-        <tr>
-            <td><a href="#" class="link" onclick="loadGame('0.0.html', 'version01')">Ver. 0.0</a></td>
-            <td><a href="#" class="link" onclick="loadGame('0.1.html', 'version02')">Ver. 0.1</a></td>
-            <td><a href="#" class="link" onclick="loadGame('1.0.html', 'version03')">Ver. 1.0</a></td>
-            <td><a href="#" class="link" onclick="loadGame('1.1.html', 'version04')">Ver. 1.1</a></td>
-        </tr>
-        <tr>
-            <td><a href="#" class="link" onclick="loadGame('1.2.html', 'version05')">Ver. 1.2</a></td>
-            <td><a href="#" class="link" onclick="loadGame('1.3.html', 'version06')">Ver. 1.3</a></td>
-            <td><a href="#" class="link" onclick="loadGame('1.4.html', 'version07')">Ver. 1.4</a></td>
-            <td><a href="#" class="link" onclick="loadGame('1.5.html', 'version08')">Ver. 1.5</a></td>
-        </tr>
-        <tr>
-            <td><a href="#" class="link" onclick="loadGame('1.6.html', 'version09')">Ver. 1.6</a></td>
-            <td><a href="#" class="link" onclick="loadGame('1.7.html', 'version10')">Ver. 1.7</a></td>
-            <td colspan="2"></td>
-        </tr>
-    </table>
-
-    <!-- 遊戲說明 -->
-    <div id="description">請選擇一個遊戲版本以查看說明。</div>
-
-    <!-- 操作說明表格 -->
-    <h2>操作說明</h2>
-    <table id="controlsTable">
         <thead>
             <tr>
-                <th>動作</th>
-                <th>按鍵</th>
+                <th>版本</th>
+                <th>連結</th>
             </tr>
         </thead>
         <tbody>
             <tr>
-                <td>請選擇一個遊戲版本以查看操作說明。</td>
-                <td></td>
+                <td>Ver. 0.0</td>
+                <td><a href="#" class="link" onclick="loadGame('0.0.html', 'ver0')">開啟</a></td>
+            </tr>
+            <tr>
+                <td>Ver. 0.1</td>
+                <td><a href="#" class="link" onclick="loadGame('0.1.html', 'ver1')">開啟</a></td>
+            </tr>
+            <tr>
+                <td>Ver. 1.0</td>
+                <td><a href="#" class="link" onclick="loadGame('1.0.html', 'ver2')">開啟</a></td>
+            </tr>
+            <tr>
+                <td>Ver. 1.1</td>
+                <td><a href="#" class="link" onclick="loadGame('1.1.html', 'ver3')">開啟</a></td>
+            </tr>
+            <tr>
+                <td>Ver. 1.2</td>
+                <td><a href="#" class="link" onclick="loadGame('1.2.html', 'ver4')">開啟</a></td>
+            </tr>
+            <tr>
+                <td>Ver. 1.3</td>
+                <td><a href="#" class="link" onclick="loadGame('1.3.html', 'ver5')">開啟</a></td>
+            </tr>
+            <tr>
+                <td>Ver. 1.4</td>
+                <td><a href="#" class="link" onclick="loadGame('1.4.html', 'ver6')">開啟</a></td>
+            </tr>
+            <tr>
+                <td>Ver. 1.5</td>
+                <td><a href="#" class="link" onclick="loadGame('1.5.html', 'ver7')">開啟</a></td>
+            </tr>
+            <tr>
+                <td>Ver. 1.6</td>
+                <td><a href="#" class="link" onclick="loadGame('1.6.html', 'ver8')">開啟</a></td>
             </tr>
         </tbody>
     </table>
+    
+    <!-- 用來顯示版本說明的區域 -->
+    <div id="description">請選擇一個遊戲版本來查看其說明。</div>
 
-    <!-- 用於顯示遊戲的 iframe -->
+    <!-- 用來顯示操作方法的區域 -->
+    <div id="controls" style="display:none;">
+        <h3>操作說明</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>操作</th>
+                    <th>描述</th>
+                </tr>
+            </thead>
+            <tbody id="controlsBody">
+                <!-- 操作說明會在這裡動態生成 -->
+            </tbody>
+        </table>
+    </div>
+
+    <!-- 用來展示遊戲的 iframe -->
     <iframe id="gameFrame" src="" frameborder="0"></iframe>
 
     <script>
         // 定義每個版本的遊戲說明
         const gameDescriptions = {
-            version01: "Ver. 0.0：這是一個基本的打磚塊遊戲，擁有簡單的磚塊排列和控制。\n已知BUG：按下 R 會加速。",
-            version02: "Ver. 0.1：增加了道具系統，玩家可以收集道具來增強遊戲體驗。",
-            version03: "Ver. 1.0：加入了多彩磚塊和不同的遊戲模式，挑戰性更高。",
-            version04: "Ver. 1.1：優化了磚塊破壞效果和音效。",
-            version05: "Ver. 1.2：新增了玩家排行榜系統。",
-            version06: "Ver. 1.3：新增了背景音樂和更多關卡。",
-            version07: "Ver. 1.4：加入了多人遊戲模式。",
-            version08: "Ver. 1.5：進一步優化了遊戲性能。",
-            version09: "Ver. 1.6：修復了一些已知的 Bug 並提升了遊戲穩定性。"
-            version10: "Ver. 1.7：優化失敗判定。"
+            ver0: "Ver. 0.0：這是一個基本的打磚塊遊戲，擁有簡單的磚塊排列和控制。",
+            ver1: "Ver. 0.1：增加了道具系統，玩家可以收集道具來增強遊戲體驗。",
+            ver2: "Ver. 1.0：加入了多彩磚塊和不同的遊戲模式，挑戰性更高。",
+            ver3: "Ver. 1.1：修正了碰撞判斷並增加了更多的關卡。",
+            ver4: "Ver. 1.2：引入了強化道具，提升了遊戲的可玩性。",
+            ver5: "Ver. 1.3：改善了遊戲速度的控制，提供更流暢的體驗。",
+            ver6: "Ver. 1.4：新增了音效和背景音樂，提升了遊戲的沉浸感。",
+            ver7: "Ver. 1.5：加入了多人遊戲模式，讓玩家可以與朋友競爭。",
+            ver8: "Ver. 1.6：引入了全新的障礙物設計，挑戰性進一步提升。",
         };
 
-        // 用來載入遊戲和顯示對應的說明
+        // 定義每個版本的操作方法
         const gameControls = {
-            version1: [
-                { action: "移動板子", key: "← / →" },
-                { action: "發射球", key: "空白鍵" }
+            ver0: [
+                { operation: "左右箭頭", description: "移動板子左右。" },
+                { operation: "空白鍵", description: "發射球。" }
             ],
-            version2: [
-                { action: "移動板子", key: "← / →" },
-                { action: "發射球", key: "空白鍵" },
-                { action: "暫停遊戲", key: "P" }
+            ver1: [
+                { operation: "左右箭頭", description: "移動板子左右。" },
+                { operation: "空白鍵", description: "發射球。" },
+                { operation: "B鍵", description: "暫停遊戲。" }
             ],
-            version3: [
-                { action: "移動板子", key: "← / →" },
-                { action: "發射球", key: "空白鍵" },
-                { action: "道具使用", key: "E" }
-            ]
-            // 其他版本的操作說明...
+            ver2: [
+                { operation: "左右箭頭", description: "移動板子左右。" },
+                { operation: "空白鍵", description: "發射球。" },
+                { operation: "B鍵", description: "暫停遊戲。" },
+                { operation: "P鍵", description: "進入遊戲選單。" }
+            ],
+            ver3: [
+                { operation: "左右箭頭", description: "移動板子左右。" },
+                { operation: "空白鍵", description: "發射球。" },
+                { operation: "B鍵", description: "暫停遊戲。" },
+                { operation: "P鍵", description: "進入遊戲選單。" }
+            ],
+            ver4: [
+                { operation: "左右箭頭", description: "移動板子左右。" },
+                { operation: "空白鍵", description: "發射球。" },
+                { operation: "B鍵", description: "暫停遊戲。" },
+                { operation: "P鍵", description: "進入遊戲選單。" }
+            ],
+            ver5: [
+                { operation: "左右箭頭", description: "移動板子左右。" },
+                { operation: "空白鍵", description: "發射球。" },
+                { operation: "B鍵", description: "暫停遊戲。" },
+                { operation: "P鍵", description: "進入遊戲選單。" }
+            ],
+            ver6: [
+                { operation: "左右箭頭", description: "移動板子左右。" },
+                { operation: "空白鍵", description: "發射球。" },
+                { operation: "B鍵", description: "暫停遊戲。" },
+                { operation: "P鍵", description: "進入遊戲選單。" }
+            ],
+            ver7: [
+                { operation: "左右箭頭", description: "移動板子左右。" },
+                { operation: "空白鍵", description: "發射球。" },
+                { operation: "B鍵", description: "暫停遊戲。" },
+                { operation: "P鍵", description: "進入遊戲選單。" }
+            ],
+            ver8: [
+                { operation: "左右箭頭", description: "移動板子左右。" },
+                { operation: "空白鍵", description: "發射球。" },
+                { operation: "B鍵", description: "暫停遊戲。" },
+                { operation: "P鍵", description: "進入遊戲選單。" }
+            ],
         };
 
         // 用來載入遊戲和顯示對應的說明
         function loadGame(versionFile, version) {
-    		const frame = document.getElementById('gameFrame');
-    		const description = document.getElementById('description');
-    		const readRecords = document.getElementById('readRecords');
-    		const controlsTable = document.getElementById('controlsTable').getElementsByTagName('tbody')[0];
+            const frame = document.getElementById('gameFrame');
+            const description = document.getElementById('description');
+            const controlsBody = document.getElementById('controlsBody');
+            const controlsDiv = document.getElementById('controls');
 
-    		// 更新 iframe 的 src 以載入選擇的遊戲版本
-    		frame.src = versionFile;
+            // 更新 iframe 的 src 以載入選擇的遊戲版本
+            frame.src = versionFile;
+            
+            // 根據選擇的版本更新說明內容
+            description.textContent = gameDescriptions[version] || "此版本沒有提供說明。";
 
-    		// 根據選擇的版本更新說明內容
-    		description.textContent = gameDescriptions[version] || "此版本沒有提供說明。";
-
-		    // 清除舊的操作說明表格內容
-    		controlsTable.innerHTML = '';
-
-    		// 根據選擇的版本更新操作說明
-    		if (gameControls[version]) {
-        		gameControls[version].forEach(control => {
-            		const row = document.createElement('tr');
-            		const actionCell = document.createElement('td');
-            		const keyCell = document.createElement('td');
-            		actionCell.textContent = control.action;
-            		keyCell.textContent = control.key;
-            		row.appendChild(actionCell);
-            		row.appendChild(keyCell);
-            		controlsTable.appendChild(row);
-        		});
-    		} else {
-        		const row = document.createElement('tr');
-        		const actionCell = document.createElement('td');
-        		const keyCell = document.createElement('td');
-        		actionCell.textContent = "此版本沒有提供操作說明。";
-        		row.appendChild(actionCell);
-        		row.appendChild(keyCell);
-        		controlsTable.appendChild(row);
-    		}
-		}
-
+            // 清空操作方法表格並填入新的操作方法
+            controlsBody.innerHTML = '';
+            if (gameControls[version]) {
+                gameControls[version].forEach(control => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `<td>${control.operation}</td><td>${control.description}</td>`;
+                    controlsBody.appendChild(row);
+                });
+                controlsDiv.style.display = 'block'; // 顯示操作說明表格
+            } else {
+                controlsDiv.style.display = 'none'; // 隱藏操作說明表格
+            }
+        }
     </script>
 </body>
 </html>
