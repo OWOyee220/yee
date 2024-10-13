@@ -62,7 +62,6 @@
                 <th>Ver. 1.4</th>
                 <th>Ver. 1.5</th>
                 <th>Ver. 1.6</th>
-                <th>Ver. 1.7</th>
             </tr>
         </thead>
         <tbody>
@@ -77,7 +76,6 @@
                 <td><a href="#" class="link" onclick="loadGame('1.4.html', 'ver06')">開啟</a></td>
                 <td><a href="#" class="link" onclick="loadGame('1.5.html', 'ver07')">開啟</a></td>
                 <td><a href="#" class="link" onclick="loadGame('1.6.html', 'ver08')">開啟</a></td>
-                <td><a href="#" class="link" onclick="loadGame('1.7.html', 'ver09')">開啟</a></td>
             </tr>
         </tbody>
     </table>
@@ -107,16 +105,15 @@
     <script>
         // 定義每個版本的遊戲說明
         const gameDescriptions = {
-            ver00: "Ver. 0.0：這是一個基本的打磚塊遊戲，擁有簡單的磚塊排列和控制。",
-            ver01: "Ver. 0.1：增加了道具系統，玩家可以收集道具來增強遊戲體驗。",
-            ver02: "Ver. 1.0：加入了多彩磚塊和不同的遊戲模式，挑戰性更高。",
-            ver03: "Ver. 1.1：修正了碰撞判斷並增加了更多的關卡。",
-            ver04: "Ver. 1.2：引入了強化道具，提升了遊戲的可玩性。",
-            ver05: "Ver. 1.3：改善了遊戲速度的控制，提供更流暢的體驗。",
-            ver06: "Ver. 1.4：新增了音效和背景音樂，提升了遊戲的沉浸感。",
-            ver07: "Ver. 1.5：加入了多人遊戲模式，讓玩家可以與朋友競爭。",
-            ver08: "Ver. 1.6：引入了全新的障礙物設計，挑戰性進一步提升。",
-            ver09: "Ver. 1.7：優化出局判定",
+            ver00: "Ver. 0.0：這是一個基本的打磚塊遊戲，擁有簡單的磚塊排列和控制。最初的雛形。\n發現bug：按 R 會加速。",
+            ver01: "Ver. 0.1：修復bug：按 R 會加速。",
+            ver02: "Ver. 1.0：優化磚塊碰撞判定；\n新增暫停提示文字；\n優化鍵盤控制功能：\n暫停遊戲/繼續遊戲 --> P \n開始遊戲/重新開始 --> 空白鍵。",
+            ver03: "Ver. 1.1：新增功能：玩家可控制發球。\n發現bug：方向鍵會控制滑桿 (Scroll Bar) 。",
+            ver04: "Ver. 1.2：新增操作方式： WASD 。\n發現bug：使用方向鍵可以無限發球與加速。",
+            ver05: "Ver. 1.3：新增功能：生命值系統。\n發現bug：生命值會呈現負值。",
+            ver06: "Ver. 1.4：調整難易度。取消操作方式： 方向鍵 。\n修復bug：方向鍵會控制滑桿 (Scroll Bar) 。\n修復bug：使用方向鍵可以無限發球與加速。\n修復bug：生命值會呈現負值。",
+            ver07: "Ver. 1.5：新增操作方式： IJKL 。",
+            ver08: "Ver. 1.6：新增功能：道具系統。",
         };
 
         // 定義每個版本的操作方法
@@ -183,14 +180,13 @@
                 { operation: "W / I", description: "發射小球。" },
                 { operation: "S / K", description: "開始 / 重新遊戲。" },
                 { operation: "A / J", description: "控制板子向左移動。" },
-                { operation: "D / L", description: "控制板子向右移動。" }
-            ],
-            ver09: [
-                { operation: "P", description: "暫停 / 繼續遊戲。" },
-                { operation: "W / I", description: "發射小球。" },
-                { operation: "S / K", description: "開始 / 重新遊戲。" },
-                { operation: "A / J", description: "控制板子向左移動。" },
-                { operation: "D / L", description: "控制板子向右移動。" }
+                { operation: "D / L", description: "控制板子向右移動。" },
+                { operation: "道具", description: "功能" },
+                { operation: "青色", description: "小球凍結。" },
+                { operation: "綠色", description: "小球減速。" },
+                { operation: "紅色", description: "小球加速。" },
+                { operation: "黃色", description: "板子麻痺 1 秒" },
+                { operation: "粉色", description: "生命值＋１" },
             ],
         };
 

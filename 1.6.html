@@ -373,7 +373,7 @@
                     baseSpeed += 1; // 增加球的速度
                     break;
                 case powerUpTypes.SPEED_DOWN:
-                    baseSpeed = Math.max(1, baseSpeed - 1); // 降低球的速度，最小速度為1
+                    baseSpeed = Math.max(1, (baseSpeed + ballSpeedMultiplier) - 1); // 降低球的速度，最小速度為1
                     break;
                 case powerUpTypes.EXTRA_LIFE:
                     lives++; // 增加一條生命
