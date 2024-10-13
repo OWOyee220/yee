@@ -91,8 +91,10 @@
             } else if (e.key === "p" || e.key === "P") {
                 paused = true;  // 暫停遊戲
             } else if (e.key === "r" || e.key === "R") {
-                paused = false; // 繼續遊戲
-                draw();         // 繼續繪製遊戲
+                if (paused) {
+                    paused = false; // 繼續遊戲
+                    draw();         // 繼續繪製遊戲
+                }
             }
         }
 
