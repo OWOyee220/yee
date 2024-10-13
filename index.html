@@ -8,7 +8,6 @@
         body {
             font-family: Arial, sans-serif;
             margin: 20px;
-            overflow: hidden; /* 禁止垂直和水平滾動條 */
         }
 
         #gameFrame {
@@ -37,7 +36,7 @@
         th, td {
             border: 1px solid #ccc;
             padding: 8px;
-            text-align: left;
+            text-align: center; /* 置中對齊 */
         }
         
         th {
@@ -54,51 +53,34 @@
         <thead>
             <tr>
                 <th>版本</th>
-                <th>連結</th>
+                <th>Ver. 0.0</th>
+                <th>Ver. 0.1</th>
+                <th>Ver. 1.0</th>
+                <th>Ver. 1.1</th>
+                <th>Ver. 1.2</th>
+                <th>Ver. 1.3</th>
+                <th>Ver. 1.4</th>
+                <th>Ver. 1.5</th>
+                <th>Ver. 1.6</th>
+                <th>Ver. 1.7</th>
             </tr>
         </thead>
         <tbody>
             <tr>
-                <td>Ver. 0.0</td>
-                <td><a href="#" class="link" onclick="loadGame('0.0.html', 'ver0')">開啟</a></td>
-            </tr>
-            <tr>
-                <td>Ver. 0.1</td>
-                <td><a href="#" class="link" onclick="loadGame('0.1.html', 'ver1')">開啟</a></td>
-            </tr>
-            <tr>
-                <td>Ver. 1.0</td>
-                <td><a href="#" class="link" onclick="loadGame('1.0.html', 'ver2')">開啟</a></td>
-            </tr>
-            <tr>
-                <td>Ver. 1.1</td>
-                <td><a href="#" class="link" onclick="loadGame('1.1.html', 'ver3')">開啟</a></td>
-            </tr>
-            <tr>
-                <td>Ver. 1.2</td>
-                <td><a href="#" class="link" onclick="loadGame('1.2.html', 'ver4')">開啟</a></td>
-            </tr>
-            <tr>
-                <td>Ver. 1.3</td>
-                <td><a href="#" class="link" onclick="loadGame('1.3.html', 'ver5')">開啟</a></td>
-            </tr>
-            <tr>
-                <td>Ver. 1.4</td>
-                <td><a href="#" class="link" onclick="loadGame('1.4.html', 'ver6')">開啟</a></td>
-            </tr>
-            <tr>
-                <td>Ver. 1.5</td>
-                <td><a href="#" class="link" onclick="loadGame('1.5.html', 'ver7')">開啟</a></td>
-            </tr>
-            <tr>
-                <td>Ver. 1.6</td>
-                <td><a href="#" class="link" onclick="loadGame('1.6.html', 'ver8')">開啟</a></td>
+                <td>連結</td>
+                <td><a href="#" class="link" onclick="loadGame('0.0.html', 'ver00')">開啟</a></td>
+                <td><a href="#" class="link" onclick="loadGame('0.1.html', 'ver01')">開啟</a></td>
+                <td><a href="#" class="link" onclick="loadGame('1.0.html', 'ver02')">開啟</a></td>
+                <td><a href="#" class="link" onclick="loadGame('1.1.html', 'ver03')">開啟</a></td>
+                <td><a href="#" class="link" onclick="loadGame('1.2.html', 'ver04')">開啟</a></td>
+                <td><a href="#" class="link" onclick="loadGame('1.3.html', 'ver05')">開啟</a></td>
+                <td><a href="#" class="link" onclick="loadGame('1.4.html', 'ver06')">開啟</a></td>
+                <td><a href="#" class="link" onclick="loadGame('1.5.html', 'ver07')">開啟</a></td>
+                <td><a href="#" class="link" onclick="loadGame('1.6.html', 'ver08')">開啟</a></td>
+                <td><a href="#" class="link" onclick="loadGame('1.7.html', 'ver09')">開啟</a></td>
             </tr>
         </tbody>
     </table>
-    
-    <!-- 用來顯示版本說明的區域 -->
-    <div id="description">請選擇一個遊戲版本來查看其說明。</div>
 
     <!-- 用來顯示操作方法的區域 -->
     <div id="controls" style="display:none;">
@@ -116,75 +98,99 @@
         </table>
     </div>
 
+    <!-- 用來顯示版本說明的區域 -->
+    <div id="description">請選擇一個遊戲版本來查看其說明。</div>
+
     <!-- 用來展示遊戲的 iframe -->
     <iframe id="gameFrame" src="" frameborder="0"></iframe>
 
     <script>
         // 定義每個版本的遊戲說明
         const gameDescriptions = {
-            ver0: "Ver. 0.0：這是一個基本的打磚塊遊戲，擁有簡單的磚塊排列和控制。",
-            ver1: "Ver. 0.1：增加了道具系統，玩家可以收集道具來增強遊戲體驗。",
-            ver2: "Ver. 1.0：加入了多彩磚塊和不同的遊戲模式，挑戰性更高。",
-            ver3: "Ver. 1.1：修正了碰撞判斷並增加了更多的關卡。",
-            ver4: "Ver. 1.2：引入了強化道具，提升了遊戲的可玩性。",
-            ver5: "Ver. 1.3：改善了遊戲速度的控制，提供更流暢的體驗。",
-            ver6: "Ver. 1.4：新增了音效和背景音樂，提升了遊戲的沉浸感。",
-            ver7: "Ver. 1.5：加入了多人遊戲模式，讓玩家可以與朋友競爭。",
-            ver8: "Ver. 1.6：引入了全新的障礙物設計，挑戰性進一步提升。",
+            ver00: "Ver. 0.0：這是一個基本的打磚塊遊戲，擁有簡單的磚塊排列和控制。",
+            ver01: "Ver. 0.1：增加了道具系統，玩家可以收集道具來增強遊戲體驗。",
+            ver02: "Ver. 1.0：加入了多彩磚塊和不同的遊戲模式，挑戰性更高。",
+            ver03: "Ver. 1.1：修正了碰撞判斷並增加了更多的關卡。",
+            ver04: "Ver. 1.2：引入了強化道具，提升了遊戲的可玩性。",
+            ver05: "Ver. 1.3：改善了遊戲速度的控制，提供更流暢的體驗。",
+            ver06: "Ver. 1.4：新增了音效和背景音樂，提升了遊戲的沉浸感。",
+            ver07: "Ver. 1.5：加入了多人遊戲模式，讓玩家可以與朋友競爭。",
+            ver08: "Ver. 1.6：引入了全新的障礙物設計，挑戰性進一步提升。",
+            ver09: "Ver. 1.7：優化出局判定",
         };
 
         // 定義每個版本的操作方法
         const gameControls = {
-            ver0: [
-                { operation: "左右箭頭", description: "移動板子左右。" },
-                { operation: "空白鍵", description: "發射球。" }
+            ver00: [
+                { operation: "空白鍵", description: "開始遊戲。" },
+                { operation: "Enter", description: "重新遊戲。" },
+                { operation: "P", description: "暫停遊戲。" },
+                { operation: "R", description: "繼續遊戲。" },
+                { operation: "←", description: "控制板子向左移動。" },
+                { operation: "→", description: "控制板子向右移動。" }
             ],
-            ver1: [
-                { operation: "左右箭頭", description: "移動板子左右。" },
-                { operation: "空白鍵", description: "發射球。" },
-                { operation: "B鍵", description: "暫停遊戲。" }
+            ver01: [
+                { operation: "空白鍵", description: "開始遊戲。" },
+                { operation: "Enter", description: "重新遊戲。" },
+                { operation: "P", description: "暫停遊戲。" },
+                { operation: "R", description: "繼續遊戲。" },
+                { operation: "←", description: "控制板子向左移動。" },
+                { operation: "→", description: "控制板子向右移動。" }
             ],
-            ver2: [
-                { operation: "左右箭頭", description: "移動板子左右。" },
-                { operation: "空白鍵", description: "發射球。" },
-                { operation: "B鍵", description: "暫停遊戲。" },
-                { operation: "P鍵", description: "進入遊戲選單。" }
+            ver02: [
+                { operation: "空白鍵", description: "開始 / 重新遊戲。" },
+                { operation: "P", description: "暫停 / 繼續遊戲。" },
+                { operation: "←", description: "控制板子向左移動。" },
+                { operation: "→", description: "控制板子向右移動。" }
             ],
-            ver3: [
-                { operation: "左右箭頭", description: "移動板子左右。" },
-                { operation: "空白鍵", description: "發射球。" },
-                { operation: "B鍵", description: "暫停遊戲。" },
-                { operation: "P鍵", description: "進入遊戲選單。" }
+            ver03: [
+                { operation: "空白鍵", description: "開始 / 重新遊戲。" },
+                { operation: "P", description: "暫停 / 繼續遊戲。" },
+                { operation: "B", description: "發射小球。" },
+                { operation: "←", description: "控制板子向左移動。" },
+                { operation: "→", description: "控制板子向右移動。" }
             ],
-            ver4: [
-                { operation: "左右箭頭", description: "移動板子左右。" },
-                { operation: "空白鍵", description: "發射球。" },
-                { operation: "B鍵", description: "暫停遊戲。" },
-                { operation: "P鍵", description: "進入遊戲選單。" }
+            ver04: [
+                { operation: "空白鍵", description: "開始 / 重新遊戲。" },
+                { operation: "P", description: "暫停 / 繼續遊戲。" },
+                { operation: "B", description: "發射小球。" },
+                { operation: "←", description: "控制板子向左移動。" },
+                { operation: "→", description: "控制板子向右移動。" }
             ],
-            ver5: [
-                { operation: "左右箭頭", description: "移動板子左右。" },
-                { operation: "空白鍵", description: "發射球。" },
-                { operation: "B鍵", description: "暫停遊戲。" },
-                { operation: "P鍵", description: "進入遊戲選單。" }
+            ver05: [
+                { operation: "P", description: "暫停 / 繼續遊戲。" },
+                { operation: "W / ↑", description: "發射小球。" },
+                { operation: "S / ↓", description: "開始 / 重新遊戲。" },
+                { operation: "A / ←", description: "控制板子向左移動。" },
+                { operation: "D / →", description: "控制板子向右移動。" }
             ],
-            ver6: [
-                { operation: "左右箭頭", description: "移動板子左右。" },
-                { operation: "空白鍵", description: "發射球。" },
-                { operation: "B鍵", description: "暫停遊戲。" },
-                { operation: "P鍵", description: "進入遊戲選單。" }
+            ver06: [
+                { operation: "P", description: "暫停 / 繼續遊戲。" },
+                { operation: "W", description: "發射小球。" },
+                { operation: "S", description: "開始 / 重新遊戲。" },
+                { operation: "A", description: "控制板子向左移動。" },
+                { operation: "D", description: "控制板子向右移動。" }
             ],
-            ver7: [
-                { operation: "左右箭頭", description: "移動板子左右。" },
-                { operation: "空白鍵", description: "發射球。" },
-                { operation: "B鍵", description: "暫停遊戲。" },
-                { operation: "P鍵", description: "進入遊戲選單。" }
+            ver07: [
+                { operation: "P", description: "暫停 / 繼續遊戲。" },
+                { operation: "W / I", description: "發射小球。" },
+                { operation: "S / K", description: "開始 / 重新遊戲。" },
+                { operation: "A / J", description: "控制板子向左移動。" },
+                { operation: "D / L", description: "控制板子向右移動。" }
             ],
-            ver8: [
-                { operation: "左右箭頭", description: "移動板子左右。" },
-                { operation: "空白鍵", description: "發射球。" },
-                { operation: "B鍵", description: "暫停遊戲。" },
-                { operation: "P鍵", description: "進入遊戲選單。" }
+            ver08: [
+                { operation: "P", description: "暫停 / 繼續遊戲。" },
+                { operation: "W / I", description: "發射小球。" },
+                { operation: "S / K", description: "開始 / 重新遊戲。" },
+                { operation: "A / J", description: "控制板子向左移動。" },
+                { operation: "D / L", description: "控制板子向右移動。" }
+            ],
+            ver09: [
+                { operation: "P", description: "暫停 / 繼續遊戲。" },
+                { operation: "W / I", description: "發射小球。" },
+                { operation: "S / K", description: "開始 / 重新遊戲。" },
+                { operation: "A / J", description: "控制板子向左移動。" },
+                { operation: "D / L", description: "控制板子向右移動。" }
             ],
         };
 
@@ -197,7 +203,7 @@
 
             // 更新 iframe 的 src 以載入選擇的遊戲版本
             frame.src = versionFile;
-            
+
             // 根據選擇的版本更新說明內容
             description.textContent = gameDescriptions[version] || "此版本沒有提供說明。";
 
