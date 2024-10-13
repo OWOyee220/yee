@@ -9,7 +9,7 @@
             display: flex;
 	    	flex-direction: column; /* 垂直方向排列 */
     		align-items: center;     /* 讓內容水平居中 */
-    		justify-content: flex-start; /* 讓內容從上開始排列 */
+    		justify-content: center; /* 讓內容從中間開始排列 */
     		height: 100vh;
     		background-color: #f0f0f0; 
     		margin: 0;
@@ -25,8 +25,6 @@
         
         canvas {
             border: 1px solid #000;
-            margin-top: 20px; /* 讓畫布向上移動，留出空間 */
-            display: block;
         }
         #instructions {
             text-align: center;
@@ -36,7 +34,7 @@
         }
         #startMessage {
             position: absolute;
-            top: 20%;
+            top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
             font-size: 24px;
@@ -45,7 +43,7 @@
         }
         #pauseMessage {
             position: absolute;
-            top: 27.5%;
+            top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
             font-size: 24px;
