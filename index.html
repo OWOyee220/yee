@@ -11,8 +11,8 @@
         }
 
         #gameFrame {
-            width: 100%; /* 設置為視窗寬度的 100% */
-            height: 60vh; /* 設置為視窗高度的 60% */
+            width: 100%; 
+            height: 60vh; 
             border: 1px solid #ccc;
             margin-top: 20px;
         }
@@ -20,6 +20,8 @@
         .link {
             text-decoration: none;
             color: blue;
+            pointer-events: none; /* 禁用未解鎖的連結 */
+            opacity: 0.5; /* 未解鎖的連結變淡 */
         }
 
         #description, #controls {
@@ -36,7 +38,7 @@
         th, td {
             border: 1px solid #ccc;
             padding: 8px;
-            text-align: center; /* 置中對齊 */
+            text-align: center; 
         }
         
         th {
@@ -47,6 +49,7 @@
 <body>
     <h1>打磚塊遊戲版本</h1>
     <h2>點擊下方連結來展示不同版本的遊戲</h2>
+    <h3>請依照版本順序點擊</h3>
     
     <!-- 版本連結表格 -->
     <table>
@@ -67,20 +70,19 @@
         <tbody>
             <tr>
                 <td>連結</td>
-                <td><a href="#" class="link" onclick="loadGame('0.0.html', 'ver00')">開啟</a></td>
-                <td><a href="#" class="link" onclick="loadGame('0.1.html', 'ver01')">開啟</a></td>
-                <td><a href="#" class="link" onclick="loadGame('1.0.html', 'ver02')">開啟</a></td>
-                <td><a href="#" class="link" onclick="loadGame('1.1.html', 'ver03')">開啟</a></td>
-                <td><a href="#" class="link" onclick="loadGame('1.2.html', 'ver04')">開啟</a></td>
-                <td><a href="#" class="link" onclick="loadGame('1.3.html', 'ver05')">開啟</a></td>
-                <td><a href="#" class="link" onclick="loadGame('1.4.html', 'ver06')">開啟</a></td>
-                <td><a href="#" class="link" onclick="loadGame('1.5.html', 'ver07')">開啟</a></td>
-                <td><a href="#" class="link" onclick="loadGame('1.6.html', 'ver08')">開啟</a></td>
+                <td><a href="#" class="link" onclick="loadGame('0.0.html', 'ver00', 0)">開啟</a></td>
+                <td><a href="#" class="link" onclick="loadGame('0.1.html', 'ver01', 1)">開啟</a></td>
+                <td><a href="#" class="link" onclick="loadGame('1.0.html', 'ver02', 2)">開啟</a></td>
+                <td><a href="#" class="link" onclick="loadGame('1.1.html', 'ver03', 3)">開啟</a></td>
+                <td><a href="#" class="link" onclick="loadGame('1.2.html', 'ver04', 4)">開啟</a></td>
+                <td><a href="#" class="link" onclick="loadGame('1.3.html', 'ver05', 5)">開啟</a></td>
+                <td><a href="#" class="link" onclick="loadGame('1.4.html', 'ver06', 6)">開啟</a></td>
+                <td><a href="#" class="link" onclick="loadGame('1.5.html', 'ver07', 7)">開啟</a></td>
+                <td><a href="#" class="link" onclick="loadGame('1.6.html', 'ver08', 8)">開啟</a></td>
             </tr>
         </tbody>
     </table>
 
-    <!-- 用來顯示操作方法的區域 -->
     <div id="controls" style="display:none;">
         <h3>操作說明</h3>
         <table>
@@ -90,16 +92,12 @@
                     <th>描述</th>
                 </tr>
             </thead>
-            <tbody id="controlsBody">
-                <!-- 操作說明會在這裡動態生成 -->
-            </tbody>
+            <tbody id="controlsBody"></tbody>
         </table>
     </div>
 
-    <!-- 用來顯示版本說明的區域 -->
     <div id="description">請選擇一個遊戲版本來查看其說明。</div>
 
-    <!-- 用來展示遊戲的 iframe -->
     <iframe id="gameFrame" src="" frameborder="0"></iframe>
 
     <script>
@@ -182,40 +180,58 @@
                 { operation: "A / J", description: "控制板子向左移動。" },
                 { operation: "D / L", description: "控制板子向右移動。" },
                 { operation: "道具", description: "功能" },
-                { operation: "青色", description: "小球凍結 1.5 秒。" },
+                { operation: "青色", description: "小球凍結。" },
                 { operation: "綠色", description: "小球減速。" },
                 { operation: "紅色", description: "小球加速。" },
-                { operation: "黃色", description: "板子麻痺 1 秒。" },
-                { operation: "粉色", description: "生命值 ＋1 。" },
+                { operation: "黃色", description: "板子麻痺 1 秒" },
+                { operation: "粉色", description: "生命值＋１" },
             ],
         };
 
-        // 用來載入遊戲和顯示對應的說明
-        function loadGame(versionFile, version) {
-            const frame = document.getElementById('gameFrame');
-            const description = document.getElementById('description');
-            const controlsBody = document.getElementById('controlsBody');
-            const controlsDiv = document.getElementById('controls');
+        let unlockedVersion = 0; // 設定最初解鎖的版本為 0
 
-            // 更新 iframe 的 src 以載入選擇的遊戲版本
-            frame.src = versionFile;
+        // 加載遊戲和說明
+        function loadGame(versionFile, version, versionIndex) {
+            if (versionIndex <= unlockedVersion) { // 檢查版本是否已解鎖
+                document.getElementById('gameFrame').src = versionFile;
+                document.getElementById('description').textContent = gameDescriptions[version] || "此版本沒有提供說明。";
+                
+                const controlsBody = document.getElementById('controlsBody');
+                controlsBody.innerHTML = '';
+                if (gameControls[version]) {
+                    gameControls[version].forEach(control => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `<td>${control.operation}</td><td>${control.description}</td>`;
+                        controlsBody.appendChild(row);
+                    });
+                    document.getElementById('controls').style.display = 'block';
+                } else {
+                    document.getElementById('controls').style.display = 'none';
+                }
 
-            // 根據選擇的版本更新說明內容
-            description.textContent = gameDescriptions[version] || "此版本沒有提供說明。";
-
-            // 清空操作方法表格並填入新的操作方法
-            controlsBody.innerHTML = '';
-            if (gameControls[version]) {
-                gameControls[version].forEach(control => {
-                    const row = document.createElement('tr');
-                    row.innerHTML = `<td>${control.operation}</td><td>${control.description}</td>`;
-                    controlsBody.appendChild(row);
-                });
-                controlsDiv.style.display = 'block'; // 顯示操作說明表格
+                // 更新解鎖的版本
+                if (versionIndex === unlockedVersion) {
+                    unlockedVersion++;
+                    unlockLinks();
+                }
             } else {
-                controlsDiv.style.display = 'none'; // 隱藏操作說明表格
+                alert("請先點選前一版本！");
             }
         }
+
+        // 解鎖下一個版本的連結
+        function unlockLinks() {
+            const links = document.querySelectorAll('.link');
+            links.forEach((link, index) => {
+                if (index <= unlockedVersion) {
+                    link.style.pointerEvents = 'auto'; // 啟用連結
+                    link.style.opacity = '1'; // 設為正常顯示
+                }
+            });
+        }
+
+        // 初始化，僅解鎖第一個版本
+        unlockLinks();
     </script>
 </body>
 </html>
